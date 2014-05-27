@@ -231,7 +231,13 @@ module ActiveRecord
 
         class Hstore < Type
           def type_cast_for_write(value)
-            ConnectionAdapters::PostgreSQLColumn.hstore_to_string value
+            puts "before: #{value}"
+            n = ConnectionAdapters::PostgreSQLColumn.hstore_to_string value
+            if n.empty?
+              n = {}
+            end
+            puts "after: #{n}"
+            n
           end
 
           def type_cast(value)
